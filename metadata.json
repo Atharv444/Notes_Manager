@@ -1,0 +1,6 @@
+{
+  "name": "Notes Manager (DevOps Ready)",
+  "description": "A full-stack Notes Manager with a polished dark theme, Express backend, Vitest testing suite, and complete CI/CD pipeline (Docker + GitHub Actions).",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
