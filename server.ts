@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import { createServer as createViteServer } from 'vite';
+
 
 interface Note {
   id: string;
@@ -83,7 +83,8 @@ app.patch('/api/notes/:id', (req, res) => {
 
 async function startServer() {
   // Vite middleware for development
-  if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+  if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',

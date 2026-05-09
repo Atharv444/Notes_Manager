@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import { createServer as createViteServer } from 'vite';
 // In-memory storage (exposed for tests if needed, or kept private)
 let notes = [];
 export const app = express();
@@ -64,7 +63,8 @@ app.patch('/api/notes/:id', (req, res) => {
 });
 async function startServer() {
     // Vite middleware for development
-    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+    if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+        const { createServer: createViteServer } = await import('vite');
         const vite = await createViteServer({
             server: { middlewareMode: true },
             appType: 'spa',
@@ -85,4 +85,6 @@ async function startServer() {
         });
     }
 }
-startServer();
+if (!process.env.VERCEL) {
+    startServer();
+}
